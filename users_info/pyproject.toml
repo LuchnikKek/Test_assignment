@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "test-assignment"
+version = "0.1.0"
+description = ""
+authors = ["LuchnikKek <ilua.kabeshov01@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "0.110.0"
+sqlalchemy = "2.0.28"
+alembic = "1.13.1"
+requests = "2.31.0"
+pydantic-extra-types = "2.6.0"
+pytest = "8.1.1"
+pytest-asyncio = "0.23.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
