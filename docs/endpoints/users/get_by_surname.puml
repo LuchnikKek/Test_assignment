@@ -1,0 +1,15 @@
+@startuml
+actor       User
+participant Backend
+database    Database
+
+autonumber
+skinparam DefaultTextAlignment center
+skinparam maxMessageSize 150
+
+User        -> Backend      ++ : GET /users/<lastname>
+Backend     -> Database     --++ : Запрос пользователя по фамилии
+Database    --> Backend     --++ : Возврат пользователя
+Backend     --> User        -- : Возврат пользователя
+
+@enduml
