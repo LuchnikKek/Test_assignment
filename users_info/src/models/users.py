@@ -11,6 +11,9 @@ class Gender(StrEnum):
     """
     Перечисление всех полов.
     В соответствии с ISO 5218: https://en.wikipedia.org/wiki/ISO/IEC_5218
+
+    Стандарт предусматривает ещё значение 'NOT KNOWN', означающее, что пол не указан.
+    Его решил реализовать как NULL в базе, чтобы избежать двойственного значения.
     """
 
     MALE = auto()
@@ -19,6 +22,20 @@ class Gender(StrEnum):
 
 
 class UsersOrm(UuidMixin, TimestampedMixin, Base):
+    """ORM-модель Пользователя.
+
+    Attributes:
+        firstname: Имя
+        lastname: Фамилия
+        patronymic: Отчество
+        age: Возраст
+        country_code: Код страны
+        gender: Пол
+
+        emails: Список вложенных моделей адресов электронной почты.
+        friends: Список вложенных моделей друзей.
+    """
+
     __tablename__ = "users"
     __table_args__ = (
         Index("users_lastname_ix", "lastname"),
@@ -34,9 +51,9 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
     gender: Mapped[Gender | None]
 
     emails: Mapped[list["EmailsOrm"]] = relationship(back_populates="user")
-
-    friends_list: Mapped[list["FriendRequestsOrm"]] = relationship(
+    friends: Mapped[list["FriendRequestsOrm"]] = relationship(
         back_populates="user",
         lazy=True,
-        primaryjoin="and_(or_(UsersOrm.id == FriendRequestsOrm.request_user_id, UsersOrm.id == FriendRequestsOrm.accept_user_id), FriendRequestsOrm.status == 'accepted')",  # todo:
+        primaryjoin="and_(or_(UsersOrm.id == FriendRequestsOrm.request_user_id, UsersOrm.id == "
+        "FriendRequestsOrm.accept_user_id), FriendRequestsOrm.status == 'accepted')",
     )

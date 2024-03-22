@@ -6,6 +6,13 @@ from users_info.src.models.users import UsersOrm
 
 
 class EmailsOrm(UuidMixin, TimestampedMixin, Base):
+    """ORM-модель адреса электронной почты.
+
+    Attributes:
+        address: Адрес электронной почты. Валидация с помощью Pydantic.
+        user: Содержит ссылку на пользователя, владельца электронной почты.
+    """
+
     __tablename__ = "emails"
 
     address: Mapped[email | None] = mapped_column(unique=True)
