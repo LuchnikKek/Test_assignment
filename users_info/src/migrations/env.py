@@ -1,16 +1,14 @@
 import asyncio
 from logging.config import fileConfig
 
+from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from alembic import context
 from users_info.src.core.config import settings
-from users_info.src.models.users import UsersOrm  # noqa
-from users_info.src.models.emails import EmailsOrm  # noqa
-from users_info.src.models.friendships import FriendRequestsOrm  # noqa
 from users_info.src.core.db import Base
+from users_info.src.models import *  # noqa: Импорт всех моделек, чтобы миграции корректно создавались.
 
 config = context.config
 
