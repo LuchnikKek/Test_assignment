@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -eo pipefail
-shopt -s nullglob
 
 #alembic upgrade head
 #exec скрипт для создания пользователей

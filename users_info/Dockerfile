@@ -1,4 +1,4 @@
-FROM python:3.12-slim as build
+FROM python:3.12-alpine as build
 
 WORKDIR /opt/users_info
 ENV PATH /opt/users_info/.venv/bin/:$PATH
@@ -18,4 +18,4 @@ COPY --from=build /opt/users_info /opt/users_info
 COPY src ./src
 COPY  start.sh .
 
-ENTRYPOINT [ "bash", "/opt/users_info/start.sh" ]
+ENTRYPOINT [ "sh", "/opt/users_info/start.sh" ]
