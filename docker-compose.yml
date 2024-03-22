@@ -24,8 +24,6 @@ services:
     container_name: users_api
     ports:
       - "${USERS_API_PORT:-8000}:${USERS_API_PORT:-8000}"
-    environment:
-      API_PORT: ${USERS_API_PORT:-8000}
     depends_on:
       users_postgres:
         condition: service_healthy
