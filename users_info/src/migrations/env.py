@@ -8,6 +8,8 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 from users_info.src.core.config import settings
 from users_info.src.models.users import UsersOrm  # noqa
+from users_info.src.models.emails import EmailsOrm  # noqa
+from users_info.src.models.friendships import FriendRequestsOrm  # noqa
 from users_info.src.core.db import Base
 
 config = context.config
@@ -17,7 +19,7 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
-config.set_main_option('sqlalchemy.url', settings.postgres.dsn)
+config.set_main_option("sqlalchemy.url", settings.postgres.dsn)
 
 
 def run_migrations_offline() -> None:
