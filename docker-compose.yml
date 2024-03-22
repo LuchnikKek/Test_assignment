@@ -7,8 +7,8 @@ services:
       POSTGRES_USER: ${USERS_PG_USER:?error}
       POSTGRES_PASSWORD: ${USERS_PG_PASSWORD:?error}
       PGPORT: ${USERS_PG_PORT:-5432}
-    expose:
-      - ${USERS_PG_PORT}
+    ports:
+      - "${USERS_PG_PORT}:${USERS_PG_PORT}"
     volumes:
       - users_pg_data:/var/lib/postgresql/data
     healthcheck:
@@ -22,6 +22,8 @@ services:
     build:
       context: ./users_info
     container_name: users_api
+    environment:
+      API_PORT: ${USERS_API_PORT:-8000}
     ports:
       - "${USERS_API_PORT:-8000}:${USERS_API_PORT:-8000}"
     depends_on:
