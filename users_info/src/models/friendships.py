@@ -3,9 +3,9 @@ from uuid import UUID
 
 from sqlalchemy.orm import Mapped, relationship
 
-from users_info.src.core.db import Base
-from users_info.src.models.mixins import UuidMixin, CreatedMixin
-from users_info.src.models.users import UsersOrm
+from src.core.db import Base
+from src.models.mixins import UuidMixin, CreatedMixin
+from src.models.users import UsersOrm
 
 
 class FriendRequestStatus(StrEnum):

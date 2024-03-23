@@ -2,7 +2,7 @@ from typing import Type
 
 from sqlalchemy import inspect
 
-from users_info.src.core.db import Base
+from src.core.db import Base
 import pprint
 
 

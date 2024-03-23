@@ -6,9 +6,9 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from users_info.src.core.config import settings
-from users_info.src.core.db import Base
-from users_info.src.models import *  # noqa: Импорт всех моделек, чтобы миграции корректно создавались.
+from src.core.config import settings
+from src.core.db import Base
+from src.models import *  # noqa: Импорт всех моделек, чтобы миграции корректно создавались.
 
 config = context.config
 

@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     postgres: PostgresSettings = PostgresSettings()
     api: ApiSettings = ApiSettings()
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=ENV_FILEPATH, extra="ignore")
 
 
 settings = Settings()

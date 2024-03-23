@@ -22,8 +22,8 @@ services:
     build:
       context: ./users_info
     container_name: users_api
-    environment:
-      API_PORT: ${USERS_API_PORT:-8000}
+    env_file:
+      - .env
     ports:
       - "${USERS_API_PORT:-8000}:${USERS_API_PORT:-8000}"
     depends_on:

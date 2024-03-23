@@ -3,8 +3,8 @@ from enum import StrEnum, auto
 from sqlalchemy import UniqueConstraint, CheckConstraint, Index
 from sqlalchemy.orm import relationship, Mapped
 
-from users_info.src.core.db import Base, str_100, country_alpha_2
-from users_info.src.models.mixins import UuidMixin, TimestampedMixin
+from src.core.db import Base, str_100, country_alpha_2
+from src.models.mixins import UuidMixin, TimestampedMixin
 
 
 class Gender(StrEnum):
