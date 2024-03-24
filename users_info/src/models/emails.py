@@ -16,7 +16,7 @@ class EmailsOrm(UuidMixin, TimestampedMixin, Base):
         user: Содержит ссылку на пользователя, владельца электронной почты.
     """
 
-    __tablename__ = "emails"
+    __tablename__ = "emails_table"
 
     address: Mapped[email | None] = mapped_column(unique=True)
     user: Mapped["UsersOrm"] = relationship(back_populates="emails")

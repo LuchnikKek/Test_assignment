@@ -1,24 +1,11 @@
-from enum import StrEnum, auto
-
 from sqlalchemy import UniqueConstraint, CheckConstraint, Index
 from sqlalchemy.orm import relationship, Mapped
 
 from src.core.db import Base, str_100, country_alpha_2
+from src.models.enums import Gender
+
+# FriendRequestStatus)
 from src.models.mixins import UuidMixin, TimestampedMixin
-
-
-class Gender(StrEnum):
-    """
-    Перечисление всех полов.
-    В соответствии с ISO 5218: https://en.wikipedia.org/wiki/ISO/IEC_5218
-
-    Стандарт предусматривает ещё значение 'NOT KNOWN', означающее, что пол не указан.
-    Его решил реализовать как NULL в базе, чтобы избежать двойственного значения.
-    """
-
-    MALE = auto()
-    FEMALE = auto()
-    NOT_APPLICABLE = auto()
 
 
 class UsersOrm(UuidMixin, TimestampedMixin, Base):
@@ -36,7 +23,7 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
         friends: Список вложенных моделей друзей.
     """
 
-    __tablename__ = "users"
+    __tablename__ = "users_table"
     __table_args__ = (
         Index("users_lastname_ix", "lastname"),
         CheckConstraint("age > 0", name="check_users_age_positive"),
@@ -51,12 +38,6 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
     gender: Mapped[Gender | None]
 
     emails: Mapped[list["EmailsOrm"]] = relationship(back_populates="user")
-    friends: Mapped[list["FriendRequestsOrm"]] = relationship(
-        back_populates="user",
-        lazy=True,
-        primaryjoin="and_(or_(UsersOrm.id == FriendRequestsOrm.request_user_id, UsersOrm.id == "
-        "FriendRequestsOrm.accept_user_id), FriendRequestsOrm.status == 'accepted')",
-    )
     # friends: Mapped[list["FriendRequestsOrm"]] = relationship(
     #     back_populates="user",
     #     lazy=True,
