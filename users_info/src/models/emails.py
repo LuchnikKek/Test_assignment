@@ -1,3 +1,6 @@
+from uuid import UUID
+
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.core.db import Base, email
@@ -17,3 +20,4 @@ class EmailsOrm(UuidMixin, TimestampedMixin, Base):
 
     address: Mapped[email | None] = mapped_column(unique=True)
     user: Mapped["UsersOrm"] = relationship(back_populates="emails")
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users_table.id", ondelete="CASCADE"))

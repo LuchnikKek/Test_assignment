@@ -57,3 +57,9 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
         primaryjoin="and_(or_(UsersOrm.id == FriendRequestsOrm.request_user_id, UsersOrm.id == "
         "FriendRequestsOrm.accept_user_id), FriendRequestsOrm.status == 'accepted')",
     )
+    # friends: Mapped[list["FriendRequestsOrm"]] = relationship(
+    #     back_populates="user",
+    #     lazy=True,
+    #     primaryjoin="and_(or_(UsersOrm.id == FriendRequestsOrm.request_user_id, UsersOrm.id == "
+    #     "FriendRequestsOrm.accept_user_id), FriendRequestsOrm.status == '{}')".format(FriendRequestStatus.ACCEPTED),
+    # )
