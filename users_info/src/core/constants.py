@@ -1,4 +1,5 @@
 from enum import StrEnum, auto
+from pathlib import Path
 
 
 class Gender(StrEnum):
@@ -31,3 +32,14 @@ class FriendRequestStatus(StrEnum):
     REQUESTED = auto()
     ACCEPTED = auto()
     DECLINED = auto()
+
+
+ROOT_PATH: Path = Path(__file__).parent.parent.parent.parent
+ENV_FILEPATH: Path = ROOT_PATH / ".env"
+
+
+# Пример запроса одного имени: https://api.agify.io/?name=michael
+# Пример запроса нескольких имён: https://api.agify.io?name[]=michael&name[]=matthew&name[]=jane
+AGIFY_URL = "https://api.agify.io?"
+GENDERIZE_URL = "https://api.genderize.io?"
+NATIONALIZE_URL = "https://api.nationalize.io?"

@@ -2,7 +2,7 @@ from sqlalchemy import UniqueConstraint, CheckConstraint, Index
 from sqlalchemy.orm import relationship, Mapped
 
 from src.core.db import Base, str_100, country_alpha_2
-from src.models.enums import Gender
+from src.core.constants import Gender
 from src.models.mixins import UuidMixin, TimestampedMixin
 
 
