@@ -3,8 +3,6 @@ from sqlalchemy.orm import relationship, Mapped
 
 from src.core.db import Base, str_100, country_alpha_2
 from src.models.enums import Gender
-
-# FriendRequestStatus)
 from src.models.mixins import UuidMixin, TimestampedMixin
 
 
@@ -35,7 +33,7 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
     patronymic: Mapped[str_100 | None]
     age: Mapped[int | None]
     country_code: Mapped[country_alpha_2 | None]
-    gender: Mapped[Gender | None]
+    gender: Mapped[Gender]
 
     emails: Mapped[list["EmailsOrm"]] = relationship(back_populates="user")
     # friends: Mapped[list["FriendRequestsOrm"]] = relationship(

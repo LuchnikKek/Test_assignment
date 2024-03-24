@@ -28,7 +28,7 @@ def upgrade() -> None:
         sa.Column("patronymic", sa.String(length=100), nullable=True),
         sa.Column("age", sa.Integer(), nullable=True),
         sa.Column("country_code", sa.String(length=2), nullable=True),
-        sa.Column("gender", sa.Enum("MALE", "FEMALE", "NOT_APPLICABLE", name="gender"), nullable=True),
+        sa.Column("gender", sa.Enum("MALE", "FEMALE", "NOT_KNOWN", "NOT_APPLICABLE", name="gender"), nullable=True),
         sa.Column("id", sa.Uuid(), nullable=False),
         sa.Column("created_at", sa.DateTime(), server_default=sa.text("TIMEZONE('utc', now())"), nullable=False),
         sa.Column("updated_at", sa.DateTime(), nullable=False),
