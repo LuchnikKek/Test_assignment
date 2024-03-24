@@ -6,7 +6,7 @@ from sqlalchemy import String
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-from users_info.src.core.config import settings
+from src.core.config import settings
 
 str_100 = Annotated[str, 100]
 country_alpha_2 = Annotated[CountryAlpha2, 2]
@@ -57,6 +57,7 @@ async_session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
 
 async def get_async_session() -> AsyncSession:
+    """Возвращает асинхронную сессию. Автоматически закрывает её."""
     async with async_session_factory() as session:
         try:
             yield session
