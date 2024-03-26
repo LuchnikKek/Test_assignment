@@ -9,12 +9,12 @@ LOGGING_DICT_CONFIG = {
         "verbose": {"format": settings.logger.format},
         "default": {
             "()": "uvicorn.logging.DefaultFormatter",
-            "fmt": '"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"',
+            "fmt": "%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s",
             "use_colors": None,
         },
         "access": {
             "()": "uvicorn.logging.AccessFormatter",
-            "fmt": "%(asctime)s - uvicorn - %(client_addr)s - %(levelname)s - '%(request_line)s' %(status_code)s",
+            "fmt": "%(asctime)s - [%(levelname)s] - [uvicorn] - %(client_addr)s - '%(request_line)s' %(status_code)s",
         },
     },
     "handlers": {
