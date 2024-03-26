@@ -1,7 +1,7 @@
 from typing import Any
+from uuid import uuid4
 
 import asyncpg
-from uuid import uuid4
 from config import DSN
 
 

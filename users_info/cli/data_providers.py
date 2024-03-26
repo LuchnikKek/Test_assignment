@@ -1,12 +1,11 @@
 # Пример запроса одного имени: https://api.agify.io/?name=michael
 # Пример запроса нескольких имён: https://api.agify.io?name[]=michael&name[]=matthew&name[]=jane
+import json
 from http import HTTPStatus
 from itertools import batched
-
-import requests
-import json
 from typing import Iterable
 
+import requests
 from config import *
 
 

@@ -1,6 +1,5 @@
 import logging
 import os
-import logging
 
 DB_USER = os.environ.get("USERS_PG_USER")
 DB_PASSWORD = os.environ.get("USERS_PG_PASSWORD")

@@ -1,9 +1,9 @@
-from sqlalchemy import UniqueConstraint, CheckConstraint, Index
-from sqlalchemy.orm import relationship, Mapped
+from sqlalchemy import CheckConstraint, Index, UniqueConstraint
+from sqlalchemy.orm import Mapped, relationship
 
-from src.core.db import Base, str_100, country_alpha_2
 from src.core.constants import Gender
-from src.utils.mixins import UuidMixin, TimestampedMixin
+from src.core.db import Base, country_alpha_2, str_100
+from src.utils.mixins import TimestampedMixin, UuidMixin
 
 
 class UsersOrm(UuidMixin, TimestampedMixin, Base):

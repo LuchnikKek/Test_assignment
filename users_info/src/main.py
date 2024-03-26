@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from src.api.routers import routers
 
+from src.api.routers import routers
 
 app = FastAPI(title="Личный кабинет пользователя")
 app.include_router(routers, prefix="/api/v1")

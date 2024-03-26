@@ -1,4 +1,5 @@
 from uuid import UUID
+
 from pydantic import BaseModel, ConfigDict
 from pydantic_extra_types.country import CountryAlpha2
 
