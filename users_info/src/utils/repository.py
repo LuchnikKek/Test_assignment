@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 
 import sqlalchemy as sa
+from pydantic import BaseModel
 
-from src.core.exceptions import NotFoundError
+from src.core.exceptions import AlreadyExistsError, NotFoundError
 
 
 class AbstractRepository(ABC):
@@ -19,9 +20,14 @@ class SQLAlchemyRepository(AbstractRepository):
     def __init__(self, session: sa.ext.asyncio.AsyncSession):
         self.session = session
 
-    async def add_one(self, data: dict) -> int:
-        stmt = sa.insert(self.model).values(**data).returning(self.model.id)
-        res = await self.session.execute(stmt)
+    async def add_one(self, data: BaseModel) -> int:
+        stmt = sa.insert(self.model).values(**data.dict()).returning(self.model.id)
+
+        try:
+            res = await self.session.execute(stmt)
+        except sa.exc.IntegrityError:
+            raise AlreadyExistsError(detail={"msg": "Record already exists"})
+
         await self.session.commit()
         return res.scalar_one()
 

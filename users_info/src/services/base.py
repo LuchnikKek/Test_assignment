@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+
 from src.utils.repository import SQLAlchemyRepository
 
 
@@ -12,3 +14,7 @@ class BaseService:
     async def get_all(self, **filter_by) -> list:
         users = await self._repository.find_all(**filter_by)
         return users
+
+    async def set(self, data: BaseModel) -> dict:
+        id = await self._repository.add_one(data)
+        return {"id": id}
