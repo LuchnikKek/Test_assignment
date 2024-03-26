@@ -28,10 +28,12 @@ def upgrade() -> None:
         sa.Column("patronymic", sa.String(length=100), nullable=True),
         sa.Column("age", sa.Integer(), nullable=True),
         sa.Column("country_code", sa.String(length=2), nullable=True),
-        sa.Column("gender", sa.Enum("MALE", "FEMALE", "NOT_KNOWN", "NOT_APPLICABLE", name="gender"), nullable=True),
+        sa.Column("gender", sa.Enum("MALE", "FEMALE", "NOT_KNOWN", "NOT_APPLICABLE", name="gender"), nullable=False),
         sa.Column("id", sa.Uuid(), nullable=False),
-        sa.Column("created_at", sa.DateTime(), server_default=sa.text("TIMEZONE('utc', now())"), nullable=False),
-        sa.Column("updated_at", sa.DateTime(), nullable=False),
+        sa.Column("created_at", sa.DateTime(), server_default=sa.func.now(), nullable=False),
+        sa.Column(
+            "updated_at", sa.DateTime(), server_default=sa.func.now(), server_onupdate=sa.func.now(), nullable=False
+        ),
         sa.CheckConstraint("age > 0", name="check_users_age_positive"),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("lastname", name="unique_users_lastname_ix"),
@@ -42,8 +44,10 @@ def upgrade() -> None:
         sa.Column("address", sa.String(length=100), nullable=True),
         sa.Column("user_id", sa.Uuid(), nullable=False),
         sa.Column("id", sa.Uuid(), nullable=False),
-        sa.Column("created_at", sa.DateTime(), server_default=sa.text("TIMEZONE('utc', now())"), nullable=False),
-        sa.Column("updated_at", sa.DateTime(), nullable=False),
+        sa.Column("created_at", sa.DateTime(), server_default=sa.func.now(), nullable=False),
+        sa.Column(
+            "updated_at", sa.DateTime(), server_default=sa.func.now(), server_onupdate=sa.func.now(), nullable=False
+        ),
         sa.ForeignKeyConstraint(["user_id"], ["users_table.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("address"),

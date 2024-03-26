@@ -27,6 +27,7 @@ async def _process_request(url: str, params: str) -> list:
     response = requests.get(url + params)
 
     if not response.status_code == HTTPStatus.OK:
+        logger.error("Ошибка от API: %s" % response.text)
         return []
 
     return response.json()
@@ -43,7 +44,7 @@ async def _get_genders(params: str) -> list:
     """Возвращает список полов. Если пол не определён - в списке будет None."""
     data = await _process_request(GENDERIZE_URL, params)
     logger.info("Получены данные по полам: %s", data)
-    return [person.get("gender") for person in data]
+    return [person.get("gender").upper() for person in data]
 
 
 async def _get_nationalities(params: str) -> list:
@@ -55,7 +56,7 @@ async def _get_nationalities(params: str) -> list:
 
     for person in data:
         person_countries = person.get("country")
-        nationalities.append(person_countries[0].get("country_id")) if len(person_countries) > 0 else None
+        nationalities.append(person_countries[0].get("country_id") if len(person_countries) > 0 else None)
 
     return nationalities
 
@@ -85,8 +86,8 @@ async def query_data(firstnames: Iterable) -> list[dict]:
 
     Пример:
         query_data(['john', 'bill'])
-        [{'firstname': 'john', 'age': 73, 'gender': 'male', 'country_code': 'NG'},
-        {'firstname': 'bill', 'age': 75, 'gender': 'male', 'country_code': 'CN'}]
+        [{'firstname': 'john', 'age': 73, 'gender': 'MALE', 'country_code': 'NG'},
+        {'firstname': 'bill', 'age': 75, 'gender': 'MALE', 'country_code': 'CN'}]
     """
     columns = ("firstname", "age", "gender", "country_code")
     ages, genders, nationalities = [], [], []
@@ -99,6 +100,7 @@ async def query_data(firstnames: Iterable) -> list[dict]:
         genders.extend(await _get_genders(params_string))
         nationalities.extend(await _get_nationalities(params_string))
         logger.info("Данные успешно получены")
+
     return _to_list_of_dicts(columns=columns, values=zip(firstnames, ages, genders, nationalities))
 
 
@@ -118,6 +120,7 @@ async def get_data():
 
     logger.info("Получение данных завершено")
     logger.debug("Полученные данные: %s" % person_data)
+
     return person_data
 
 
@@ -130,4 +133,5 @@ async def get_mock_data():
 
     logger.info("Получение mock данных завершено")
     logger.debug("Полученные данные: %s" % data)
+
     return data

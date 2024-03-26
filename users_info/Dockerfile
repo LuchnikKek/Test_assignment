@@ -15,7 +15,6 @@ RUN python -m pip install --no-cache-dir poetry==1.7.1 \
 FROM build AS app
 
 COPY --from=build /opt/users_info /opt/users_info
-COPY src ./src
-COPY  start.sh .
+COPY . .
 
 ENTRYPOINT [ "sh", "/opt/users_info/start.sh" ]

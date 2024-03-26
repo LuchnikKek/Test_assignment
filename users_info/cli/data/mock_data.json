@@ -5,19 +5,19 @@
         "firstname": "Vaughan",
         "lastname": "Swanson",
         "patronymic": "Spyros",
-        "gender": "male"
+        "gender": "MALE"
     },
     {
         "country_code": "RU",
         "firstname": "Giacomo",
         "lastname": "Craft",
-        "gender": "male"
+        "gender": "MALE"
     },
     {
         "country_code": "VN",
         "firstname": "Stone",
         "lastname": "Francis",
-        "gender": "male"
+        "gender": "MALE"
     },
     {
         "country_code": "AM",
@@ -25,26 +25,26 @@
         "firstname": "Akeem",
         "lastname": "Greene",
         "patronymic": "Cracchiolo",
-        "gender": "male"
+        "gender": "MALE"
     },
     {
         "age": 63,
         "firstname": "Emery",
         "lastname": "Blanchard",
-        "gender": "male"
+        "gender": "MALE"
     },
     {
         "firstname": "Merritt",
         "lastname": "Bryan",
         "patronymic": "Abney",
-        "gender": "male"
+        "gender": "MALE"
     },
     {
         "age": 23,
         "firstname": "Illana",
         "lastname": "Mullins",
         "patronymic": "Peynirci",
-        "gender": "female"
+        "gender": "FEMALE"
     },
     {
         "country_code": "MX",
@@ -52,20 +52,20 @@
         "firstname": "Madeline",
         "lastname": "Carpenter",
         "patronymic": "Stroud",
-        "gender": "female"
+        "gender": "FEMALE"
     },
     {
         "country_code": "LV",
         "firstname": "Clio",
         "lastname": "Curtis",
-        "gender": "female"
+        "gender": "FEMALE"
     },
     {
         "country_code": "US",
         "age": 28,
         "firstname": "Lael",
         "lastname": "Lancaster",
-        "gender": "female"
+        "gender": "FEMALE"
     },
     {
         "country_code": "MY",
@@ -73,12 +73,12 @@
         "firstname": "Karleigh",
         "lastname": "Calhoun",
         "patronymic": "Weiner",
-        "gender": "female"
+        "gender": "FEMALE"
     },
     {
         "age": 55,
         "firstname": "Savannah",
         "lastname": "Hatfield",
-        "gender": "female"
+        "gender": "FEMALE"
     }
 ]
