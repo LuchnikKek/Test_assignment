@@ -1,7 +1,7 @@
 import datetime
 import uuid
 
-from sqlalchemy import text
+from sqlalchemy import func
 from sqlalchemy.orm import Mapped, mapped_column
 
 
@@ -14,13 +14,13 @@ class UuidMixin(object):
 class CreatedMixin(object):
     """Mixin, добавляющий модели поле с датой создания."""
 
-    created_at: Mapped[datetime.datetime] = mapped_column(server_default=text("TIMEZONE('utc', now())"))
+    created_at: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
 
 
 class UpdatedMixin(object):
     """Mixin, добавляющий модели поле с датой изменения."""
 
-    updated_at: Mapped[datetime.datetime] = mapped_column(onupdate=lambda: datetime.datetime.now(datetime.UTC))
+    updated_at: Mapped[datetime.datetime] = mapped_column(server_default=func.now(), server_onupdate=func.now())
 
 
 class TimestampedMixin(CreatedMixin, UpdatedMixin):

@@ -1,9 +1,6 @@
-from pathlib import Path
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-ROOT_PATH: Path = Path(__file__).parent.parent.parent.parent
-ENV_FILEPATH: Path = ROOT_PATH / ".env"
+from src.core.constants import ENV_FILEPATH
 
 
 class PostgresSettings(BaseSettings):

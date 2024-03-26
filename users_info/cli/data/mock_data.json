@@ -1,0 +1,84 @@
+[
+    {
+        "country_code": "AL",
+        "age": 54,
+        "firstname": "Vaughan",
+        "lastname": "Swanson",
+        "patronymic": "Spyros",
+        "gender": "MALE"
+    },
+    {
+        "country_code": "RU",
+        "firstname": "Giacomo",
+        "lastname": "Craft",
+        "gender": "MALE"
+    },
+    {
+        "country_code": "VN",
+        "firstname": "Stone",
+        "lastname": "Francis",
+        "gender": "MALE"
+    },
+    {
+        "country_code": "AM",
+        "age": 19,
+        "firstname": "Akeem",
+        "lastname": "Greene",
+        "patronymic": "Cracchiolo",
+        "gender": "MALE"
+    },
+    {
+        "age": 63,
+        "firstname": "Emery",
+        "lastname": "Blanchard",
+        "gender": "MALE"
+    },
+    {
+        "firstname": "Merritt",
+        "lastname": "Bryan",
+        "patronymic": "Abney",
+        "gender": "MALE"
+    },
+    {
+        "age": 23,
+        "firstname": "Illana",
+        "lastname": "Mullins",
+        "patronymic": "Peynirci",
+        "gender": "FEMALE"
+    },
+    {
+        "country_code": "MX",
+        "age": 45,
+        "firstname": "Madeline",
+        "lastname": "Carpenter",
+        "patronymic": "Stroud",
+        "gender": "FEMALE"
+    },
+    {
+        "country_code": "LV",
+        "firstname": "Clio",
+        "lastname": "Curtis",
+        "gender": "FEMALE"
+    },
+    {
+        "country_code": "US",
+        "age": 28,
+        "firstname": "Lael",
+        "lastname": "Lancaster",
+        "gender": "FEMALE"
+    },
+    {
+        "country_code": "MY",
+        "age": 53,
+        "firstname": "Karleigh",
+        "lastname": "Calhoun",
+        "patronymic": "Weiner",
+        "gender": "FEMALE"
+    },
+    {
+        "age": 55,
+        "firstname": "Savannah",
+        "lastname": "Hatfield",
+        "gender": "FEMALE"
+    }
+]
