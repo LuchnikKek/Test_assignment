@@ -9,5 +9,14 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.get("", response_model=list[UserSchemaOutShort])
 async def get_users(users_service: UsersService = Depends(get_users_service)):
-    users = await users_service.get_users()
+    users = await users_service.get_all()
     return users
+
+
+@router.get("/{lastname}", response_model=UserSchemaOut)
+async def get_user(
+    lastname: str,
+    users_service: UsersService = Depends(get_users_service),
+):
+    user = await users_service.get(lastname=lastname)
+    return user

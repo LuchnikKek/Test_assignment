@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 
-from sqlalchemy import insert, select
-from sqlalchemy.ext.asyncio import AsyncSession
+import sqlalchemy as sa
+
+from src.core.exceptions import NotFoundError
 
 
 class AbstractRepository(ABC):
@@ -15,17 +16,33 @@ class AbstractRepository(ABC):
 class SQLAlchemyRepository(AbstractRepository):
     model = None
 
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: sa.ext.asyncio.AsyncSession):
         self.session = session
 
     async def add_one(self, data: dict) -> int:
-        stmt = insert(self.model).values(**data).returning(self.model.id)
+        stmt = sa.insert(self.model).values(**data).returning(self.model.id)
         res = await self.session.execute(stmt)
         await self.session.commit()
         return res.scalar_one()
 
-    async def find_all(self):
-        stmt = select(self.model)
+    async def find(self, **filter_by):
+        stmt = sa.select(self.model).filter_by(**filter_by)
+
         res = await self.session.execute(stmt)
-        result = res.scalars().all()
+        try:
+            result = res.scalars().one()
+        except sa.exc.NoResultFound:
+            raise NotFoundError(detail={"msg": "Not found", "params": filter_by})
+
+        return result
+
+    async def find_all(self, **filter_by):
+        stmt = sa.select(self.model).filter_by(**filter_by)
+
+        res = await self.session.execute(stmt)
+        try:
+            result = res.scalars().all()
+        except sa.exc.NoResultFound:
+            raise NotFoundError(detail={"msg": "Not found", "params": filter_by})
+
         return result
