@@ -4,8 +4,9 @@ from typing import Annotated
 import typer
 import os
 
+from data_loader import PostgresWorker
 from data_providers import get_data, get_mock_data
-from config import logger
+from config import logger, DEBUG
 
 app = typer.Typer()
 
@@ -13,21 +14,27 @@ app = typer.Typer()
 @app.command()
 def migrate():
     """Применяет миграции."""
+    if DEBUG:
+        os.system("env")
     os.system("alembic upgrade head")
     logger.info("Миграции применены.")
 
 
 @app.command()
 def create(
-    from_net: Annotated[bool, typer.Option("--mock", "-m", help="Считать mock-данные, а не загружать по сети.")] = True
+    mocked: Annotated[bool, typer.Option("--mock", "-m", help="Считать mock-данные, а не загружать по сети.")] = False
 ):
     """Заполняет базу данными."""
-    if from_net:
-        data = asyncio.run(get_data())
-    else:
-        data = asyncio.run(get_mock_data())
+    pw = PostgresWorker()
 
-    logger.info("Загружено в базу.")
+    if not asyncio.run(pw.is_table_empty("users_table")):
+        logger.error("В базе уже есть данные. Insert пропущен.")
+        raise typer.Exit()
+
+    data = asyncio.run(get_mock_data() if mocked else get_data())
+    asyncio.run(pw.insert_data("users_table", data))
+
+    logger.info("Данные загружены в базу.")
 
 
 if __name__ == "__main__":
