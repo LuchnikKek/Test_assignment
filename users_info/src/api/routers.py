@@ -1,5 +1,10 @@
 from src.api.v1.users import router as router_users
+from fastapi import APIRouter
 
-all_routers = [
+routers = APIRouter()
+routes = [
     router_users,
 ]
+
+for router in routes:
+    routers.include_router(router)

@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.core.db import Base, email
-from src.models.mixins import UuidMixin, TimestampedMixin
+from src.utils.mixins import UuidMixin, TimestampedMixin
 from src.models.users import UsersOrm
 
 

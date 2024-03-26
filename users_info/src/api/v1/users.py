@@ -3,10 +3,7 @@ from fastapi import APIRouter, Depends
 from src.api.v1.dependencies import get_users_service
 from src.services.users import UsersService
 
-router = APIRouter(
-    prefix="/api/v1/users",
-    tags=["Users"],
-)
+router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get("")

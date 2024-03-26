@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship, Mapped
 
 from src.core.db import Base, str_100, country_alpha_2
 from src.core.constants import Gender
-from src.models.mixins import UuidMixin, TimestampedMixin
+from src.utils.mixins import UuidMixin, TimestampedMixin
 
 
 class UsersOrm(UuidMixin, TimestampedMixin, Base):

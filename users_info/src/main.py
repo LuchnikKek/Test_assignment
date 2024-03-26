@@ -1,12 +1,10 @@
 from fastapi import FastAPI
-from src.api.routers import all_routers
+from src.api.routers import routers
 
 
 app = FastAPI(title="Личный кабинет пользователя")
+app.include_router(routers, prefix="/api/v1")
 
-
-for router in all_routers:
-    app.include_router(router)
 
 if __name__ == "__main__":
     import uvicorn
