@@ -1,5 +1,6 @@
 import logging
 import os
+import logging
 
 DB_USER = os.environ.get("USERS_PG_USER")
 DB_PASSWORD = os.environ.get("USERS_PG_PASSWORD")
@@ -18,6 +19,11 @@ NATIONALIZE_URL = "https://api.nationalize.io"
 DEBUG = os.environ.get("DEBUG") in ("True", "true", "1")
 
 LOG_LVL = os.environ.get("LOG_LVL")
+
 logger = logging.getLogger("cli")
+logger.setLevel(LOG_LVL)
+
 ch = logging.StreamHandler()
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+ch.setFormatter(formatter)
+logger.addHandler(ch)

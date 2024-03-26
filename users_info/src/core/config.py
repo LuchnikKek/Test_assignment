@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from src.core.constants import ENV_FILEPATH
 
 
-class PostgresSettings(BaseSettings):
+class DatabaseSettings(BaseSettings):
     """Конфигурация PostgreSQL."""
 
     user: str
@@ -32,9 +32,25 @@ class ApiSettings(BaseSettings):
     )
 
 
+class LoggerSettings(BaseSettings):
+    level: str
+    format: str
+    default_handlers: list
+    level_console: str
+    level_handlers: str
+    level_unicorn_errors: str
+    level_unicorn_access: str
+    level_root: str
+
+    model_config = SettingsConfigDict(env_prefix="USERS_LOG_", env_file=ENV_FILEPATH, extra="ignore")
+
+
 class Settings(BaseSettings):
-    postgres: PostgresSettings = PostgresSettings()
+    database: DatabaseSettings = DatabaseSettings()
     api: ApiSettings = ApiSettings()
+    logger: LoggerSettings = LoggerSettings()
+
+    debug: bool
 
     model_config = SettingsConfigDict(env_file=ENV_FILEPATH, extra="ignore")
 

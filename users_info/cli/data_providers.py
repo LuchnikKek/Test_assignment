@@ -9,10 +9,6 @@ from typing import Iterable
 
 from config import *
 
-logger.setLevel(LOG_LVL)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
-
 
 def _format_params(names: Iterable) -> str:
     """Форматирует список имён в query-параметры."""
