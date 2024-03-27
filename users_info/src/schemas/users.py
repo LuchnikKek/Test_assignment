@@ -1,12 +1,19 @@
 from typing import Annotated
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, PositiveInt, StringConstraints
+from pydantic import BaseModel, ConfigDict, EmailStr, PositiveInt, StringConstraints
 from pydantic_extra_types.country import CountryAlpha2
 
 from src.core.constants import Gender
 
 str_100_meta = StringConstraints(min_length=1, max_length=100, strip_whitespace=True, to_lower=True)
+
+
+class InlineEmail(BaseModel):
+    """Inline-модель, возвращаемая при получении списка Email пользователя."""
+
+    id: UUID
+    address: EmailStr
 
 
 class UserSchemaUUIDMixin(BaseModel):
@@ -29,27 +36,33 @@ class UserSchemaFullnameMixin(BaseModel):
     patronymic: Annotated[str | None, str_100_meta] = None
 
 
-class UserSchemaOptionalMixin(BaseModel):
-    """Mixin для всех моделей с необязательными полями возраст, пол, код страны."""
+class UserSchemaAdditionalMixin(BaseModel):
+    """Mixin для всех моделей с дополнительными полями возраст, пол, код страны."""
 
     age: PositiveInt | None = None
     gender: Gender
     country_code: CountryAlpha2 | None = None
 
 
-class UserSchemaShort(UserSchemaUUIDMixin, UserSchemaOrmMixin, UserSchemaFullnameMixin):
-    """Пользователь с UUID, ConfigDict и полями имени."""
+class UserSchemaGetShort(UserSchemaUUIDMixin, UserSchemaOrmMixin, UserSchemaFullnameMixin):
+    """Схема, возвращаемая при получении списка всех пользователей."""
 
     pass
 
 
-class UserSchemaFull(UserSchemaUUIDMixin, UserSchemaOrmMixin, UserSchemaFullnameMixin, UserSchemaOptionalMixin):
-    """Пользователь с UUID, ConfigDict, полями имени и дополнительной информацией."""
+class UserSchemaGet(UserSchemaUUIDMixin, UserSchemaOrmMixin, UserSchemaFullnameMixin, UserSchemaAdditionalMixin):
+    """Схема, возвращаемая при получении подробной информации о пользователе."""
+
+    emails: list[InlineEmail]
+
+
+class UserSchemaPost(UserSchemaOrmMixin, UserSchemaFullnameMixin, UserSchemaAdditionalMixin):
+    """Схема, отправляемая при создании пользователя."""
 
     pass
 
 
-class UserSchemaFullPost(UserSchemaOrmMixin, UserSchemaFullnameMixin, UserSchemaOptionalMixin):
-    """Пользователь с ConfigDict, полями имени и дополнительной информацией"""
+class UserSchemaUpdate(UserSchemaUUIDMixin, UserSchemaOrmMixin, UserSchemaFullnameMixin, UserSchemaAdditionalMixin):
+    """Схема, получаемая при изменении пользователя."""
 
     pass
