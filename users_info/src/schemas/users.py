@@ -1,12 +1,17 @@
 from typing import Annotated
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, PositiveInt, StringConstraints
+from pydantic import BaseModel, ConfigDict, EmailStr, PositiveInt, StringConstraints
 from pydantic_extra_types.country import CountryAlpha2
 
 from src.core.constants import Gender
 
 str_100_meta = StringConstraints(min_length=1, max_length=100, strip_whitespace=True, to_lower=True)
+
+
+class InlineEmail(BaseModel):
+    id: UUID
+    address: EmailStr
 
 
 class UserSchemaUUIDMixin(BaseModel):
@@ -44,9 +49,9 @@ class UserSchemaShort(UserSchemaUUIDMixin, UserSchemaOrmMixin, UserSchemaFullnam
 
 
 class UserSchemaFull(UserSchemaUUIDMixin, UserSchemaOrmMixin, UserSchemaFullnameMixin, UserSchemaOptionalMixin):
-    """Пользователь с UUID, ConfigDict, полями имени и дополнительной информацией."""
+    """Пользователь с UUID, ConfigDict, полями имени, дополнительной информацией и списком почтовых адресов."""
 
-    pass
+    emails: list[InlineEmail]
 
 
 class UserSchemaFullPost(UserSchemaOrmMixin, UserSchemaFullnameMixin, UserSchemaOptionalMixin):

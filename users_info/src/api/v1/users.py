@@ -36,7 +36,7 @@ async def post_user(
     users_service: UsersService = Depends(get_users_service),
 ):
     """Создаёт нового пользователя."""
-    return await users_service.set(user)
+    return {"id": await users_service.set(user)}
 
 
 @router.put("", response_model=UserSchemaFull)

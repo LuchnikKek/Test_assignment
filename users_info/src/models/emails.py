@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 from sqlalchemy import ForeignKey
@@ -6,6 +7,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.core.db import Base, email
 from src.models.users import UsersOrm
 from src.utils.mixins import TimestampedMixin, UuidMixin
+
+if TYPE_CHECKING:
+    from .users import UsersOrm
 
 
 class EmailsOrm(UuidMixin, TimestampedMixin, Base):
@@ -18,6 +22,7 @@ class EmailsOrm(UuidMixin, TimestampedMixin, Base):
 
     __tablename__ = "emails_table"
 
-    address: Mapped[email | None] = mapped_column(unique=True)
-    user: Mapped["UsersOrm"] = relationship(back_populates="emails")
+    address: Mapped[email] = mapped_column(unique=True)
+
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users_table.id", ondelete="CASCADE"))
+    user: Mapped["UsersOrm"] = relationship(back_populates="emails")

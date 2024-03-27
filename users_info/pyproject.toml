@@ -13,7 +13,7 @@ requests = "2.31.0"
 pydantic-extra-types = "2.6.0"
 uvicorn = "0.29.0"
 pydantic-settings = "2.2.1"
-pydantic = "2.6.1"
+pydantic = {version = "2.6.1", extras = ["email"]}
 sqlalchemy = {version = "2.0.28", extras = ["asyncio"]}
 asyncpg = "0.29.0"
 pycountry = "23.12.11"

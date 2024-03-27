@@ -33,13 +33,14 @@ class SQLAlchemyRepository(AbstractRepository):
         await self.session.commit()
         return res.scalar_one()
 
-    async def find(self, **filter_by):
+    async def find(self, options=None, **filter_by):
         """Получает запись по запрошенным {key: value}."""
-        stmt = sa.select(self.model).filter_by(**filter_by)
+
+        stmt = sa.select(self.model).filter_by(**filter_by).options(options)
 
         res = await self.session.execute(stmt)
         try:
-            result = res.scalars().one()
+            result = res.unique().scalars().one()
         except sa.exc.NoResultFound:
             raise NotFoundError(detail={"msg": "Not found", "params": filter_by})
 

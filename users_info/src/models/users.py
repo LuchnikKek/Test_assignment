@@ -1,9 +1,14 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import CheckConstraint, Index, UniqueConstraint
 from sqlalchemy.orm import Mapped, relationship
 
 from src.core.constants import Gender
 from src.core.db import Base, country_alpha_2, str_100
 from src.utils.mixins import TimestampedMixin, UuidMixin
+
+if TYPE_CHECKING:
+    from .emails import EmailsOrm
 
 
 class UsersOrm(UuidMixin, TimestampedMixin, Base):
