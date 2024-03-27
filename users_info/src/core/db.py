@@ -49,8 +49,8 @@ class Base(DeclarativeBase):
 
 
 engine = create_async_engine(
-    url=settings.postgres.dsn,
-    echo=True,
+    url=settings.database.dsn,
+    echo=settings.debug,
 )
 
 async_session_factory = async_sessionmaker(engine, expire_on_commit=False)

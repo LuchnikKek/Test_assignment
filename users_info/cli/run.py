@@ -1,12 +1,11 @@
 import asyncio
+import os
 from typing import Annotated
 
 import typer
-import os
-
+from config import DEBUG, logger
 from data_loader import PostgresWorker
 from data_providers import get_data, get_mock_data
-from config import logger, DEBUG
 
 app = typer.Typer()
 

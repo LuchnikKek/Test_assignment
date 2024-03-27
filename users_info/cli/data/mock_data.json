@@ -2,83 +2,83 @@
     {
         "country_code": "AL",
         "age": 54,
-        "firstname": "Vaughan",
-        "lastname": "Swanson",
-        "patronymic": "Spyros",
+        "firstname": "vaughan",
+        "lastname": "swanson",
+        "patronymic": "spyros",
         "gender": "MALE"
     },
     {
         "country_code": "RU",
-        "firstname": "Giacomo",
-        "lastname": "Craft",
+        "firstname": "giacomo",
+        "lastname": "craft",
         "gender": "MALE"
     },
     {
         "country_code": "VN",
-        "firstname": "Stone",
-        "lastname": "Francis",
+        "firstname": "stone",
+        "lastname": "francis",
         "gender": "MALE"
     },
     {
         "country_code": "AM",
         "age": 19,
-        "firstname": "Akeem",
-        "lastname": "Greene",
-        "patronymic": "Cracchiolo",
+        "firstname": "akeem",
+        "lastname": "greene",
+        "patronymic": "cracchiolo",
         "gender": "MALE"
     },
     {
         "age": 63,
-        "firstname": "Emery",
-        "lastname": "Blanchard",
+        "firstname": "emery",
+        "lastname": "blanchard",
         "gender": "MALE"
     },
     {
-        "firstname": "Merritt",
-        "lastname": "Bryan",
-        "patronymic": "Abney",
+        "firstname": "merritt",
+        "lastname": "bryan",
+        "patronymic": "abney",
         "gender": "MALE"
     },
     {
         "age": 23,
-        "firstname": "Illana",
-        "lastname": "Mullins",
-        "patronymic": "Peynirci",
+        "firstname": "illana",
+        "lastname": "mullins",
+        "patronymic": "peynirci",
         "gender": "FEMALE"
     },
     {
         "country_code": "MX",
         "age": 45,
-        "firstname": "Madeline",
-        "lastname": "Carpenter",
-        "patronymic": "Stroud",
+        "firstname": "madeline",
+        "lastname": "carpenter",
+        "patronymic": "stroud",
         "gender": "FEMALE"
     },
     {
         "country_code": "LV",
-        "firstname": "Clio",
-        "lastname": "Curtis",
+        "firstname": "clio",
+        "lastname": "curtis",
         "gender": "FEMALE"
     },
     {
         "country_code": "US",
         "age": 28,
-        "firstname": "Lael",
-        "lastname": "Lancaster",
+        "firstname": "lael",
+        "lastname": "lancaster",
         "gender": "FEMALE"
     },
     {
         "country_code": "MY",
         "age": 53,
-        "firstname": "Karleigh",
-        "lastname": "Calhoun",
-        "patronymic": "Weiner",
+        "firstname": "karleigh",
+        "lastname": "calhoun",
+        "patronymic": "weiner",
         "gender": "FEMALE"
     },
     {
         "age": 55,
-        "firstname": "Savannah",
-        "lastname": "Hatfield",
+        "firstname": "savannah",
+        "lastname": "hatfield",
         "gender": "FEMALE"
     }
 ]
