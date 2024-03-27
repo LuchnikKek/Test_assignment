@@ -1,15 +1,17 @@
-# from uuid import UUID
-#
-# from sqlalchemy import ForeignKey
-# from sqlalchemy.orm import Mapped, relationship, mapped_column
-#
-# from src.core.db import Base
-# from src.models.enums import FriendRequestStatus
-# from src.models.mixins import UuidMixin, CreatedMixin
-# from src.models.users import UsersOrm
-#
-#
-# class FriendRequestsOrm(UuidMixin, CreatedMixin, Base):
+import sqlalchemy as sa
+
+from src.core.constants import FriendRequestStatus
+from src.core.db import Base
+
+FriendRelationships = sa.Table(
+    "friend_relationships_table",
+    Base.metadata,
+    sa.Column("request_user_id", sa.Uuid, sa.ForeignKey("users_table.id", ondelete="CASCADE"), primary_key=True),
+    sa.Column("accept_user_id", sa.Uuid, sa.ForeignKey("users_table.id", ondelete="CASCADE"), primary_key=True),
+    sa.Column("status", sa.Enum(FriendRequestStatus), nullable=False),
+)
+
+# class FriendRequestsOrm(CreatedMixin, Base):
 #     """ORM-модель запроса дружбы.
 #
 #     Attributes:
@@ -20,9 +22,4 @@
 #
 #     __tablename__ = "friend_requests_table"
 #
-#     request_user_id: Mapped[UUID]
-#     accept_user_id: Mapped[UUID]
 #     status: Mapped[FriendRequestStatus]
-#
-#     user: Mapped["UsersOrm"] = relationship(back_populates="friends")
-#     user_id = mapped_column(ForeignKey("users_table.id"))

@@ -9,6 +9,7 @@ from src.utils.mixins import TimestampedMixin, UuidMixin
 
 if TYPE_CHECKING:
     from .emails import EmailsOrm
+    from .friendships import FriendRelationships
 
 
 class UsersOrm(UuidMixin, TimestampedMixin, Base):
@@ -41,9 +42,25 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
     gender: Mapped[Gender]
 
     emails: Mapped[list["EmailsOrm"]] = relationship(back_populates="user")
-    # friends: Mapped[list["FriendRequestsOrm"]] = relationship(
-    #     back_populates="user",
-    #     lazy=True,
-    #     primaryjoin="and_(or_(UsersOrm.id == FriendRequestsOrm.request_user_id, UsersOrm.id == "
-    #     "FriendRequestsOrm.accept_user_id), FriendRequestsOrm.status == '{}')".format(FriendRequestStatus.ACCEPTED),
-    # )
+
+    friend_requests: Mapped[list["UsersOrm"]] = relationship(
+        "UsersOrm",
+        secondary="FriendRelationships",
+        primaryjoin="id == FriendRelationships.c.accept_user_id",
+        secondaryjoin="id == FriendRelationships.c.request_user_id",
+        back_populates="friend_accepts",
+    )
+
+    friend_accepts: Mapped[list["UsersOrm"]] = relationship(
+        "UsersOrm",
+        secondary="FriendRelationships",
+        primaryjoin="id == FriendRelationships.c.request_user_id",
+        secondaryjoin="id == FriendRelationships.c.accept_user_id",
+        back_populates="friend_requests",
+    )
+
+    friends: Mapped[list["UsersOrm"]] = relationship(
+        back_populates="user",
+        lazy=True,
+        primaryjoin="and_(or_(UsersOrm.id == FriendRelationships.request_user_id, UsersOrm.id == FriendRelationships.accept_user_id), FriendRelationships.status == FriendRequestStatus.ACCEPTED)",
+    )
