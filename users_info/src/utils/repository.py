@@ -57,23 +57,31 @@ class SQLAlchemyRepository(AbstractRepository):
 
         return result
 
-    async def update_if_exists(self, data: BaseModel, exclude_none: bool, attr: str = "id"):
-        """Обновляет запись по атрибуту attr, если она существует. Если attr не указан - обновляет по id."""
+    async def update_if_exists(self, schema: BaseModel, partial: bool, attr: str = "id"):
+        """
+        Изменяет запись в базе.
+
+        Обновлена будет запись, у которой getattr(schema, attr) == getattr(record, attr).
+
+        При partial=False запись будет перезаписана полностью.
+        При partial=True у записи останутся те поля, в которых у schema стоит None.
+
+        Возвращает всю запись.
+        """
         try:
-            kv = {attr: getattr(data, attr)} if attr else {}
+            stmt = (
+                sa.update(self.model)
+                .filter_by(**{attr: getattr(schema, attr)})
+                .values(**schema.dict(exclude_none=partial))
+                .returning(self.model)
+            )
+
+            res = await self.session.execute(stmt)
+            await self.session.commit()
+
+            return res.scalar_one()
+
         except AttributeError:
             raise NotFoundError(detail={"msg": "No such attribute", "params": {"attribute_key": attr}})
-
-        stmt = (
-            sa.update(self.model).filter_by(**kv).values(**data.dict(exclude_none=exclude_none)).returning(self.model)
-        )
-
-        res = await self.session.execute(stmt)
-        await self.session.commit()
-
-        try:
-            result = res.scalar_one()
         except sa.exc.NoResultFound:
-            raise NotFoundError(detail={"msg": "No such record", "params": {**kv}})
-
-        return result
+            raise NotFoundError(detail={"msg": "No such record", "params": {attr: getattr(schema, attr)}})
