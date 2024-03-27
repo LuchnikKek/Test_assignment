@@ -9,7 +9,6 @@ from src.utils.mixins import TimestampedMixin, UuidMixin
 
 if TYPE_CHECKING:
     from .emails import EmailsOrm
-    from .friendships import FriendRelationships
 
 
 class UsersOrm(UuidMixin, TimestampedMixin, Base):
@@ -45,22 +44,18 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
 
     friend_requests: Mapped[list["UsersOrm"]] = relationship(
         "UsersOrm",
-        secondary="FriendRelationships",
-        primaryjoin="id == FriendRelationships.c.accept_user_id",
-        secondaryjoin="id == FriendRelationships.c.request_user_id",
-        back_populates="friend_accepts",
+        secondary="friend_relationships_table",
+        foreign_keys="accept_user_id",
+        # primaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
+        # secondaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
+        back_populates="accept_user",
     )
 
     friend_accepts: Mapped[list["UsersOrm"]] = relationship(
         "UsersOrm",
-        secondary="FriendRelationships",
-        primaryjoin="id == FriendRelationships.c.request_user_id",
-        secondaryjoin="id == FriendRelationships.c.accept_user_id",
-        back_populates="friend_requests",
-    )
-
-    friends: Mapped[list["UsersOrm"]] = relationship(
-        back_populates="user",
-        lazy=True,
-        primaryjoin="and_(or_(UsersOrm.id == FriendRelationships.request_user_id, UsersOrm.id == FriendRelationships.accept_user_id), FriendRelationships.status == FriendRequestStatus.ACCEPTED)",
+        secondary="friend_relationships_table",
+        foreign_keys="request_user_id",
+        # primaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
+        # secondaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
+        back_populates="request_user",
     )
