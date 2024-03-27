@@ -19,15 +19,10 @@ class FriendsRepository(SQLAlchemyRepository):
         res2 = await self.session.execute(stmt2)
 
         try:
-            user1: UsersOrm = res1.unique().scalars().one()
-            user2: UsersOrm = res2.unique().scalars().one()
-            logging.critical(user1)
-            logging.critical(user1)
-            logging.critical(user1)
-            logging.critical(user2)
-            logging.critical(user2)
-            logging.critical(user2)
-            raise Exception
+            user1 = res1.unique.scalars().one()
+            user2 = res2.unique.scalars().one()
+            user2.friend_requests.append(user1)
+            user1.friend_accepts.append(user2)
         except sa.exc.NoResultFound:
             raise NotFoundError(
                 detail={
@@ -35,15 +30,5 @@ class FriendsRepository(SQLAlchemyRepository):
                     "params": {"req_user_id": str(data.request_user_id), "accept_user_id": str(data.accept_user_id)},
                 }
             )
-
-        # stmt = UsersOrm.friends.
-
-        stmt = sa.insert(self.model).values(**data.dict()).returning(self.model.id)
-
-        try:
-            res = await self.session.execute(stmt)
-        except sa.exc.IntegrityError:
-            raise AlreadyExistsError(detail={"msg": "Record already exists"})
-
         await self.session.commit()
-        return res.scalar_one()
+        return
