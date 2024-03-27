@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 from uuid import UUID
 
 import sqlalchemy as sa
@@ -7,15 +6,7 @@ from pydantic import BaseModel
 from src.core.exceptions import AlreadyExistsError, NotFoundError
 
 
-class AbstractRepository(ABC):
-    @abstractmethod
-    async def add_one(self, data: dict): ...
-
-    @abstractmethod
-    async def find_all(self): ...
-
-
-class SQLAlchemyRepository(AbstractRepository):
+class SQLAlchemyRepository:
     model = None
 
     def __init__(self, session: sa.ext.asyncio.AsyncSession):
@@ -64,8 +55,8 @@ class SQLAlchemyRepository(AbstractRepository):
 
         Обновлена будет запись, у которой getattr(schema, attr) == getattr(record, attr).
 
-        При partial=False запись будет перезаписана полностью.
-        При partial=True у записи останутся те поля, в которых у schema стоит None.
+        При partial=False запись будет перезаписана полностью (PUT).
+        При partial=True у записи останутся те поля, в которых у schema стоит None (PATCH).
 
         Возвращает всю запись.
         """

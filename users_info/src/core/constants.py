@@ -1,4 +1,4 @@
-from enum import StrEnum, auto
+from enum import StrEnum
 from pathlib import Path
 
 
@@ -29,9 +29,9 @@ class FriendRequestStatus(StrEnum):
         'DECLINED': Запрос отклонён.
     """
 
-    REQUESTED = auto()
-    ACCEPTED = auto()
-    DECLINED = auto()
+    REQUESTED = "REQUESTED"
+    ACCEPTED = "ACCEPTED"
+    DECLINED = "DECLINED"
 
 
 ROOT_PATH: Path = Path(__file__).parent.parent.parent.parent

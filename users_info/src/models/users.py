@@ -41,9 +41,19 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
     gender: Mapped[Gender]
 
     emails: Mapped[list["EmailsOrm"]] = relationship(back_populates="user")
-    # friends: Mapped[list["FriendRequestsOrm"]] = relationship(
-    #     back_populates="user",
-    #     lazy=True,
-    #     primaryjoin="and_(or_(UsersOrm.id == FriendRequestsOrm.request_user_id, UsersOrm.id == "
-    #     "FriendRequestsOrm.accept_user_id), FriendRequestsOrm.status == '{}')".format(FriendRequestStatus.ACCEPTED),
-    # )
+
+    friend_requests: Mapped[list["UsersOrm"]] = relationship(
+        "UsersOrm",
+        secondary="friend_relationships_table",
+        primaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
+        secondaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
+        back_populates="friend_accepts",
+    )
+
+    friend_accepts: Mapped[list["UsersOrm"]] = relationship(
+        "UsersOrm",
+        secondary="friend_relationships_table",
+        primaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
+        secondaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
+        back_populates="friend_requests",
+    )
