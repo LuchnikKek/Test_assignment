@@ -16,5 +16,7 @@ class EmailSchemaOrmMixin(BaseModel):
 
 
 class EmailSchemaPost(EmailSchemaOrmMixin):
+    """Схема, отправляемая при добавлении ящика электронной почты."""
+
     address: EmailStr
     user_id: UUID
