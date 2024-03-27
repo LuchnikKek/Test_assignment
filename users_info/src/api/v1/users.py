@@ -18,8 +18,7 @@ router = APIRouter(prefix="/users", tags=["Users"])
 @router.get("", response_model=list[UserSchemaShort])
 async def get_users(users_service: UsersService = Depends(get_users_service)):
     """Возвращает список всех пользователей"""
-    users = await users_service.get_all()
-    return users
+    return await users_service.get_all()
 
 
 @router.get("/{lastname}", response_model=UserSchemaFull)
@@ -28,8 +27,7 @@ async def get_user(
     users_service: UsersService = Depends(get_users_service),
 ):
     """Возвращает пользователя по фамилии."""
-    user = await users_service.get(lastname=lastname)
-    return user
+    return await users_service.get(lastname=lastname)
 
 
 @router.post("", response_model=UserSchemaUUIDMixin)
@@ -38,5 +36,22 @@ async def post_user(
     users_service: UsersService = Depends(get_users_service),
 ):
     """Создаёт нового пользователя."""
-    user = await users_service.set(data=user)
-    return user
+    return await users_service.set(user)
+
+
+@router.put("", response_model=UserSchemaFull)
+async def put_user(
+    user: UserSchemaFullPost,
+    users_service: UsersService = Depends(get_users_service),
+):
+    """Полностью изменяет пользователя по фамилии."""
+    return await users_service.put(user, attr="lastname")
+
+
+@router.patch("", response_model=UserSchemaFull)
+async def patch_user(
+    user: UserSchemaFullPost,
+    users_service: UsersService = Depends(get_users_service),
+):
+    """Частично изменяет пользователя по фамилии."""
+    return await users_service.patch(user, attr="lastname")

@@ -33,7 +33,7 @@ class UserSchemaOptionalMixin(BaseModel):
     """Mixin для всех моделей с необязательными полями возраст, пол, код страны."""
 
     age: PositiveInt | None = None
-    gender: Gender = Gender.NOT_KNOWN
+    gender: Gender
     country_code: CountryAlpha2 | None = None
 
 

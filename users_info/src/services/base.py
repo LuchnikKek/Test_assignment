@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 from src.utils.repository import SQLAlchemyRepository
@@ -8,13 +10,16 @@ class BaseService:
         self._repository = repository
 
     async def get(self, **filter_by):
-        user = await self._repository.find(**filter_by)
-        return user
+        return await self._repository.find(**filter_by)
 
     async def get_all(self, **filter_by) -> list:
-        users = await self._repository.find_all(**filter_by)
-        return users
+        return await self._repository.find_all(**filter_by)
 
-    async def set(self, data: BaseModel) -> dict:
-        id = await self._repository.add_one(data)
-        return {"id": id}
+    async def set(self, data: BaseModel) -> UUID:
+        return await self._repository.add_one(data)
+
+    async def put(self, data: BaseModel, attr: str | None = None):
+        return await self._repository.update_if_exists(data, exclude_none=False, attr=attr)
+
+    async def patch(self, data: BaseModel, attr: str | None = None):
+        return await self._repository.update_if_exists(data, exclude_none=True, attr=attr)
