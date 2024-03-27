@@ -45,17 +45,15 @@ class UsersOrm(UuidMixin, TimestampedMixin, Base):
     friend_requests: Mapped[list["UsersOrm"]] = relationship(
         "UsersOrm",
         secondary="friend_relationships_table",
-        foreign_keys="accept_user_id",
-        # primaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
-        # secondaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
-        back_populates="accept_user",
+        primaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
+        secondaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
+        back_populates="friend_accepts",
     )
 
     friend_accepts: Mapped[list["UsersOrm"]] = relationship(
         "UsersOrm",
         secondary="friend_relationships_table",
-        foreign_keys="request_user_id",
-        # primaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
-        # secondaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
-        back_populates="request_user",
+        primaryjoin="UsersOrm.id == FriendRelationshipsTable.request_user_id",
+        secondaryjoin="UsersOrm.id == FriendRelationshipsTable.accept_user_id",
+        back_populates="friend_requests",
     )
